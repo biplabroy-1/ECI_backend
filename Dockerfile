@@ -1,4 +1,3 @@
-# Use an official Python runtime as a parent image
 FROM python:3.11-slim
 
 # Set environment variables
@@ -22,7 +21,7 @@ RUN apt-get update && \
 
 # Install Python dependencies
 COPY requirements.txt .
-RUN pip install --upgrade pip && pip install -r requirements.txt
+RUN pip install --upgrade pip && pip install -r requirements.txt gunicorn
 
 # Copy project
 COPY . .
@@ -30,5 +29,6 @@ COPY . .
 # Expose the port Flask runs on
 EXPOSE 5000
 
-# Run the application
-CMD ["python", "app.py"]
+# Run the application with Gunicorn
+# Replace `app:app` if your Flask instance has a different name
+CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "app:app"]

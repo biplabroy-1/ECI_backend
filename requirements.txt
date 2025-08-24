@@ -8,6 +8,7 @@ distro==1.9.0
 Flask==3.1.2
 flask-cors==6.0.1
 groq==0.31.0
+gunicorn==23.0.0
 h11==0.16.0
 httpcore==1.0.9
 httpx==0.28.1
@@ -17,6 +18,7 @@ Jinja2==3.1.6
 joblib==1.5.1
 MarkupSafe==3.0.2
 numpy==2.3.2
+packaging==25.0
 pandas==2.3.2
 pdf2image==1.17.0
 pillow==11.3.0
