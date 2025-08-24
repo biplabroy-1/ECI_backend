@@ -571,7 +571,7 @@ def call_groq_api(prompt: str, max_retries: int = 3) -> str:
         return "AI report generation skipped - API key not configured."
 
     client = groq.Groq(
-        api_key=r"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")
+        api_key=GROQ_API_KEY)
 
     system_message = {
         "role": "system",
