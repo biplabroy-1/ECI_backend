@@ -17,7 +17,7 @@ dotenv.load_dotenv()  # Load environment variables from .env file
 # import your existing logic
 
 app = Flask(__name__)
-CORS(app)  # allow Next.js frontend to call Flask
+CORS(app, resources={r"/api/*": {"origins": "https://eci.azmth.in"}})
 
 # --- Route 1: Upload & analyze a voter data JSON ---
 

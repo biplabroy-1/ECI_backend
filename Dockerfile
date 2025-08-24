@@ -31,4 +31,4 @@ EXPOSE 5000
 
 # Run the application with Gunicorn
 # Replace `app:app` if your Flask instance has a different name
-CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "app:app"]
+CMD ["gunicorn", "-w", "2", "-k", "sync", "-t", "600", "-b", "0.0.0.0:5000", "app:app"]
