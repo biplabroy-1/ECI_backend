@@ -12,7 +12,7 @@ PDF_PATH = r"list.pdf"  # Change this to your PDF path
 
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
-LANGUAGE = "Hindi"  # Options: "English" or "Hindi"
+# LANGUAGE = "Hindi"  # Options: "English" or "Hindi"
 OUTPUT_JSON = "data2.json"  # Output JSON file name
 # ==================== END CONFIGURATION ================
 
@@ -54,7 +54,7 @@ def extract_pdf_metadata(pdf_path):
 def create_output_folder(pdf_path):
     """Create output folder named after PDF file"""
     pdf_name = Path(pdf_path).stem
-    output_folder = f"{pdf_name}_images"
+    output_folder = f"uploads/{pdf_name}_images"
 
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
@@ -75,7 +75,7 @@ def convert_pdf_to_images(pdf_path, start_page=3):
             dpi=300,
             first_page=start_page,
             fmt='jpeg',
-            thread_count=4,
+            thread_count=4
         )
 
         total_pages = len(images) + start_page - 1
@@ -97,14 +97,14 @@ def convert_pdf_to_images(pdf_path, start_page=3):
         return [], ""
 
 
-def analyze_image_with_groq(image_path, api_key):
+def analyze_image_with_groq(image_path, api_key, language):
     """Analyze image using Groq API to extract voter data"""
     try:
         base64_image = encode_image(image_path)
         client = Groq(api_key=api_key)
 
         prompt = f"""
-        Analyze this Indian election roll/voter list image in {LANGUAGE}. Extract all voter information visible in the image.
+        Analyze this Indian election roll/voter list image in {language}. Extract all voter information visible in the image.
         
         Each voter entry contains:
         - Serial Number (top left corner in a box)
