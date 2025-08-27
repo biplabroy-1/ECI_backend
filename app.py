@@ -10,6 +10,8 @@ from enhanced_corruption_analysis import (
 from fastapi import FastAPI, UploadFile, File, Form, Request, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, StreamingResponse
+from typing import List, Dict
+from pydantic import BaseModel
 import os
 import dotenv
 import shutil
@@ -29,12 +31,26 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+class Voter(BaseModel):
+    serial_number: str
+    name: str
+    father_name: str
+    house_number: str
+    age: str
+    gender: str
+    voter_id: str
+    photo_status: str
+
+
+class VoterRequest(BaseModel):
+    data: List[Voter]   # ✅ matches {"data": [...]}
+    
 
 # --- Route 1: Upload & analyze a voter data JSON ---
 @app.post("/api/analyze-json")
-async def analyze_json(request: Request):
+async def analyze_json(payload: VoterRequest):
     try:
-        data = await request.json()
+        data = [v.model_dump() for v in payload.data]
         if not data:
             raise HTTPException(
                 status_code=400, detail="No JSON data provided")

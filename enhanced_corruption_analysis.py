@@ -61,16 +61,7 @@ def load_voter_data(data: dict) -> pd.DataFrame:
     """Load and preprocess voter data directly from JSON dict (no file I/O)."""
     try:
         # Extract all voters from each page
-        voters = []
-        pages = data.get("pages", [])
-        for page in pages:
-            page_voters = page.get("voters", [])
-            for voter in page_voters:
-                # Optionally add page_info to each voter
-                voter["page_info"] = page.get("page_info", {})
-                voters.append(voter)
-
-        df = pd.DataFrame(voters)
+        df = pd.DataFrame(data)
 
         # Standardize column names
         column_mapping = {
